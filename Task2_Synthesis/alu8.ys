@@ -1,0 +1,24 @@
+# Read Verilog Input File
+read_verilog alu8.v
+
+# Check top-level hierarchy
+hierarchy -check -top alu8
+
+# High-level processing passes
+proc; opt; fsm; opt; memory; opt
+
+# Map design to internal tech library
+techmap; opt
+
+# Map design to osu018 standard cells
+dfflibmap -liberty /home/lab-user/Desktop/bootcamp-files/Tech-pdks/osu018/osu018_stdcells.lib
+abc -liberty /home/lab-user/Desktop/bootcamp-files/Tech-pdks/osu018/osu018_stdcells.lib
+
+# Clean up unused elements
+clean
+
+# Save the schematic representation as a PNG file
+show -format png -prefix alu8_schematic
+
+# Write the synthesized gate-level netlist file
+write_verilog alu8_netlist.v
